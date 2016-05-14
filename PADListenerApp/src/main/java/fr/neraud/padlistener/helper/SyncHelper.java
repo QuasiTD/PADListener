@@ -119,12 +119,9 @@ public class SyncHelper {
 			capturedMonster.setExp(expCap);
 		}
 
-		// PAD allows to awaken a monster beyond its max, but PADHerder caps to the max awakenings
-		final int maxAwakenings = monsterInfo.getAwokenSkillIds() == null ? 0 : monsterInfo.getAwokenSkillIds().size();
-		if (capturedMonster.getAwakenings() > maxAwakenings) {
-			MyLog.debug("capping monster awakenings for " + capturedMonster);
-			capturedMonster.setAwakenings(maxAwakenings);
-		}
+		// ahnada 2016-05-14
+		// Removing awakening cap because pre-awakening has been added to PADHerder as of 2016-01
+		// https://github.com/madcowfred/padherder-issues/issues/845
 
 		// TODO cap skillups and plusses ?
 	}
