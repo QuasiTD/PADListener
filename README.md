@@ -45,6 +45,20 @@ This application can :
 
 Building the application
 ----------
+### Prerequisites
+* Java SDK
+* [Gradle](http://gradle.org/)
+  * Follow instructions on their [website](https://docs.gradle.org/current/userguide/installation.html)
+* [Android SDK](http://developer.android.com/sdk/index.html) with the following packages:
+  * Tools
+    * Android SDK Tools
+    * Android SDK Platform-tools
+    * Android SDK Build-tools
+  * Latest SDK Platform
+  * Extras
+    * Android Support Repository
+
+### Notes
 If you want to build the application yourself, you can use gradle.
 
 To set up the build, you need to set up the android sdk home with one of the following methods : 
