@@ -117,6 +117,16 @@ public class PushSyncHelper {
 		if (model.getCapturedInfo().getPlusRcv() != model.getPadherderInfo().getPlusRcv()) {
 			json.put("plus_rcv", model.getCapturedInfo().getPlusRcv());
 		}
+		final int[] capturedLatents = model.getCapturedInfo().getLatentAwakenings();
+		final int[] padherderLatents = model.getPadherderInfo().getLatentAwakenings();
+		for (int i = 0; i < capturedLatents.length; ++i) {
+			// Send an update if there's nothing to compare to from padherder
+			// or the two elements don't match
+			if (padherderLatents.length <= i || capturedLatents[i] != padherderLatents[i]) {
+				// The api is 1 based
+				json.put("latent" + (i+1), capturedLatents[i]);
+			}
+		}
 		if (model.getCapturedInfo().getPriority() != model.getPadherderInfo().getPriority()) {
 			json.put("priority", model.getCapturedInfo().getPriority().getValue());
 		}
@@ -153,6 +163,14 @@ public class PushSyncHelper {
 		json.put("plus_hp", model.getCapturedInfo().getPlusHp());
 		json.put("plus_atk", model.getCapturedInfo().getPlusAtk());
 		json.put("plus_rcv", model.getCapturedInfo().getPlusRcv());
+
+		// Latent Awakenings
+		final int[] capturedLatents = model.getCapturedInfo().getLatentAwakenings();
+		for (int i = 0; i < capturedLatents.length; ++i) {
+			// The api is 1 based
+			json.put("latent" + (i+1), capturedLatents[i]);
+		}
+
 		json.put("priority", model.getCapturedInfo().getPriority().getValue());
 		json.put("note", model.getCapturedInfo().getNote());
 

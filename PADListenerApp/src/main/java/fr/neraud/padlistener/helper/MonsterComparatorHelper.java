@@ -17,6 +17,18 @@ public class MonsterComparatorHelper {
 		}
 	}
 
+	private static boolean compareLatentAwakenings(MonsterModel a, MonsterModel b) {
+		final int[] aLatents = a.getLatentAwakenings();
+		final int[] bLatents = b.getLatentAwakenings();
+
+		boolean bIsSame = aLatents.length == bLatents.length;
+		for (int i = 0; bIsSame && (i < aLatents.length); ++i) {
+			bIsSame &= aLatents[i] == bLatents[i];
+		}
+
+		return bIsSame;
+	}
+
 	public static boolean areMonstersEqual(MonsterModel a, MonsterModel b) {
 		return a.getIdJp() == b.getIdJp() &&
 				compareCardId(a, b) &&
@@ -25,7 +37,8 @@ public class MonsterComparatorHelper {
 				a.getPlusHp() == b.getPlusHp() &&
 				a.getPlusAtk() == b.getPlusAtk() &&
 				a.getPlusRcv() == b.getPlusRcv() &&
-				a.getAwakenings() == b.getAwakenings();
+				a.getAwakenings() == b.getAwakenings() &&
+				compareLatentAwakenings(a, b);
 	}
 
 }

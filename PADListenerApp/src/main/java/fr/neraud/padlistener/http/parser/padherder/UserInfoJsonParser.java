@@ -137,6 +137,12 @@ public class UserInfoJsonParser extends AbstractJsonParser<UserInfoModel> {
 		monster.setPlusHp(monsterJson.optInt("plus_hp"));
 		monster.setPlusAtk(monsterJson.optInt("plus_atk"));
 		monster.setPlusRcv(monsterJson.optInt("plus_rcv"));
+		monster.setLatentAwakenings(new int[]{
+				monsterJson.optInt("latent1"),
+				monsterJson.optInt("latent2"),
+				monsterJson.optInt("latent3"),
+				monsterJson.optInt("latent4"),
+				monsterJson.optInt("latent5")});
 
 		MyLog.exit();
 		return monster;

@@ -22,7 +22,7 @@ import fr.neraud.padlistener.provider.sqlite.tables.MonsterInfoTable;
  */
 public class PADListenerSQLiteOpenHelper extends SQLiteOpenHelper {
 
-	private static final int DB_VERSION = 12;
+	private static final int DB_VERSION = 13;
 	private static final String DATABASE_NAME = "padlistener.db";
 
 	private static final List<ITable> TABLES = new ArrayList<ITable>();

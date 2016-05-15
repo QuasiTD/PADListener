@@ -124,6 +124,7 @@ public class GetPlayerDataJsonParser extends AbstractJsonParser<GetPlayerDataApi
         monster.setPlusAtk(plusResults.getInt(1));
         monster.setPlusRcv(plusResults.getInt(2));
         monster.setAwakenings(plusResults.getInt(3));
+        //TODO set latent awakenings, but I don't know where this type of card data comes up
 
         MyLog.exit();
         return monster;
@@ -146,11 +147,11 @@ public class GetPlayerDataJsonParser extends AbstractJsonParser<GetPlayerDataApi
             MyLog.warn(e.getMessage());
         }
         monster.setIdJp(idJp);
-        //TODO not sure about these ... what's the #10 field for ?!
         monster.setPlusHp(cardResult.getInt(6));
         monster.setPlusAtk(cardResult.getInt(7));
         monster.setPlusRcv(cardResult.getInt(8));
         monster.setAwakenings(cardResult.getInt(9));
+        monster.setLatentAwakeningsFromPackedInt(cardResult.getInt(10));
 
         MyLog.exit();
         return monster;
@@ -206,6 +207,7 @@ public class GetPlayerDataJsonParser extends AbstractJsonParser<GetPlayerDataApi
         leader.setPlusAtk(friendResult.getInt(startPosition++));
         leader.setPlusRcv(friendResult.getInt(startPosition++));
         leader.setAwakenings(friendResult.getInt(startPosition++));
+        leader.setLatentAwakeningsFromPackedInt(friendResult.getInt(startPosition++));
         return leader;
     }
 
