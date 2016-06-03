@@ -59,7 +59,12 @@ public class CapturedPlayerMonsterDescriptor {
 		PLUS_HP("plusHp"),
 		PLUS_ATK("plusAtk"),
 		PLUS_RCV("plusRcv"),
-		AWAKENINGS("awakenings");
+		AWAKENINGS("awakenings"),
+		LATENT_1("latent1"),
+		LATENT_2("latent2"),
+		LATENT_3("latent3"),
+		LATENT_4("latent4"),
+		LATENT_5("latent5");
 
 		private final String colName;
 

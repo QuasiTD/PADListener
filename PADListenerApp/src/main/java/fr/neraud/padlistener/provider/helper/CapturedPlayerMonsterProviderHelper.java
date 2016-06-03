@@ -31,6 +31,12 @@ public class CapturedPlayerMonsterProviderHelper extends BaseProviderHelper {
 		model.setPlusAtk(getInt(cursor, CapturedPlayerMonsterDescriptor.Fields.PLUS_ATK));
 		model.setPlusRcv(getInt(cursor, CapturedPlayerMonsterDescriptor.Fields.PLUS_RCV));
 		model.setAwakenings(getInt(cursor, CapturedPlayerMonsterDescriptor.Fields.AWAKENINGS));
+		model.setLatentAwakenings(new int[]{
+				getInt(cursor, CapturedPlayerMonsterDescriptor.Fields.LATENT_1),
+				getInt(cursor, CapturedPlayerMonsterDescriptor.Fields.LATENT_2),
+				getInt(cursor, CapturedPlayerMonsterDescriptor.Fields.LATENT_3),
+				getInt(cursor, CapturedPlayerMonsterDescriptor.Fields.LATENT_4),
+				getInt(cursor, CapturedPlayerMonsterDescriptor.Fields.LATENT_5)});
 
 		return model;
 	}
@@ -66,6 +72,14 @@ public class CapturedPlayerMonsterProviderHelper extends BaseProviderHelper {
 		putValue(values, CapturedPlayerMonsterDescriptor.Fields.PLUS_ATK, model.getPlusAtk());
 		putValue(values, CapturedPlayerMonsterDescriptor.Fields.PLUS_RCV, model.getPlusRcv());
 		putValue(values, CapturedPlayerMonsterDescriptor.Fields.AWAKENINGS, model.getAwakenings());
+
+		//TODO putValue that supports int arrays
+		final int[] latents = model.getLatentAwakenings();
+		putValue(values, CapturedPlayerMonsterDescriptor.Fields.LATENT_1, latents[0]);
+		putValue(values, CapturedPlayerMonsterDescriptor.Fields.LATENT_2, latents[1]);
+		putValue(values, CapturedPlayerMonsterDescriptor.Fields.LATENT_3, latents[2]);
+		putValue(values, CapturedPlayerMonsterDescriptor.Fields.LATENT_4, latents[3]);
+		putValue(values, CapturedPlayerMonsterDescriptor.Fields.LATENT_5, latents[4]);
 
 		return values;
 	}

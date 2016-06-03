@@ -71,6 +71,9 @@ public class MonsterComparator implements Comparator<MonsterModel> {
 		}
 		result = compareLong(a.getAwakenings(), b.getAwakenings());
 
+		// We should theoretically compare latent awakenings here
+		// but I don't think it's all that useful for sorting
+
 		return result;
 	}
 

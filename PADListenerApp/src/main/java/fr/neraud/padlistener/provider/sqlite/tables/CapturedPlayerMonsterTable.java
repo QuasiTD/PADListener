@@ -28,7 +28,12 @@ public class CapturedPlayerMonsterTable implements ITable {
 		/* */CapturedPlayerMonsterDescriptor.Fields.PLUS_HP.getColName() + " INTEGER NOT NULL," +
 		/* */CapturedPlayerMonsterDescriptor.Fields.PLUS_ATK.getColName() + " INTEGER NOT NULL," +
 		/* */CapturedPlayerMonsterDescriptor.Fields.PLUS_RCV.getColName() + " INTEGER NOT NULL," +
-		/* */CapturedPlayerMonsterDescriptor.Fields.AWAKENINGS.getColName() + " INTEGER NOT NULL" +
+		/* */CapturedPlayerMonsterDescriptor.Fields.AWAKENINGS.getColName() + " INTEGER NOT NULL," +
+		/* */CapturedPlayerMonsterDescriptor.Fields.LATENT_1.getColName() + " INTEGER NOT NULL," +
+		/* */CapturedPlayerMonsterDescriptor.Fields.LATENT_2.getColName() + " INTEGER NOT NULL," +
+		/* */CapturedPlayerMonsterDescriptor.Fields.LATENT_3.getColName() + " INTEGER NOT NULL," +
+		/* */CapturedPlayerMonsterDescriptor.Fields.LATENT_4.getColName() + " INTEGER NOT NULL," +
+		/* */CapturedPlayerMonsterDescriptor.Fields.LATENT_5.getColName() + " INTEGER NOT NULL" +
 		/* */");";
 	}
 
@@ -39,7 +44,8 @@ public class CapturedPlayerMonsterTable implements ITable {
 
 	@Override
 	public int getVersion() {
-		return 9;
+		// Version 13: Added latent1 - latent5 columns
+		return 13;
 	}
 
 	@Override
