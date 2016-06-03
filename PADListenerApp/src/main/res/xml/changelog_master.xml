@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 	<release
+		version="2.1.10" versioncode="58">
+		<change>Fixed #103 : Monsters kept being updated</change>
+	</release>
+	<release
+		version="2.1.9" versioncode="57">
+		<change>Fixed #81 : Fixed friends broken by the new Best Friend flag (thanks QuasiTD !)</change>
+		<change>Fixed #90 : repaired Manual capture for M (thanks olifozzy !)</change>
+		<change>Fixed #91 : Tapping on "PAD data captured" notification dismisses it</change>
+		<change>Fixed #94 : Added support for CardID</change>
+		<change>Fixed #101 : the app crashed when too many monsters are synced at the same time</change>
+	</release>
+	<release
 		version="2.1.8" versioncode="56">
 		<change>Fixed #86 : added support for monster type Machine and Vendor. Also handled unknown monster type to prevent further issue</change>
 		<change>Fixed #88 : Sharing captured data via Gmail was not working</change>
