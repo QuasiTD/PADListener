@@ -1,6 +1,7 @@
 package fr.neraud.padlistener.proxy.helper;
 
 import android.content.Context;
+import android.content.Intent;
 
 import org.sandrop.webscarab.model.StoreException;
 import org.sandrop.webscarab.plugin.Framework;
@@ -12,6 +13,7 @@ import org.sandroproxy.utils.network.ClientResolver;
 import org.sandroproxy.webscarab.store.sql.SqlLiteStore;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import fr.neraud.log.MyLog;
 import fr.neraud.padlistener.exception.ListenerSetupException;
@@ -86,5 +88,30 @@ public class ProxyHelper {
 		}
 
 		MyLog.exit();
+	}
+
+	// Copied from SandroProxy /SandroProxyPlugin/src/org/sandroproxy/plugin/gui/MainActivity.java
+	private static String ACTION_INSTALL = "android.credentials.INSTALL";
+	private static String EXTRA_CERTIFICATE = "CERT";
+
+	/*
+	 *  this will work only on sdk 14 or higher
+	 */
+	public static void exportCACertToUserStore(Context context){
+
+		Intent intent = new Intent(ACTION_INSTALL);
+		intent.setClassName("com.android.certinstaller","com.android.certinstaller.CertInstallerMain");
+		try {
+			String keystoreCAExportFullPath = PreferenceUtils.getCAExportFilePath(context.getApplicationContext());
+			File caExportFile = new File(keystoreCAExportFullPath);
+			byte[] result = new byte[(int) caExportFile.length()];
+			FileInputStream in = new FileInputStream(caExportFile);
+			in.read(result);
+			in.close();
+			intent.putExtra(EXTRA_CERTIFICATE, result);
+			context.startActivity(intent);
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
 	}
 }

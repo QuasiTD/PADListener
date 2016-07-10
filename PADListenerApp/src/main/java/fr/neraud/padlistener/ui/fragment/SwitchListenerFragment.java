@@ -49,6 +49,8 @@ public class SwitchListenerFragment extends Fragment {
 	TextView mListenerStatus;
 	@InjectView(R.id.switch_listener_switch)
 	Switch mListenerSwitch;
+	@InjectView(R.id.switch_listener_export_cert_button)
+	Button mExportCertButton;
 	@InjectView(R.id.switch_listener_secondary_action_button)
 	Button mSecondaryActionButton;
 	@InjectView(R.id.switch_listener_proxy_started)
@@ -296,6 +298,19 @@ public class SwitchListenerFragment extends Fragment {
 			}
 		});
 		alert.show();
+		MyLog.exit();
+	}
+
+	@OnClick(R.id.switch_listener_export_cert_button)
+	@SuppressWarnings("unused")
+	void onExportCertClicked() {
+		MyLog.entry();
+		// Exporting certificates only work on sdk 14 or higher
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			fr.neraud.padlistener.proxy.helper.ProxyHelper.exportCACertToUserStore(getActivity());
+		} else {
+			// TODO: add error notification to user
+		}
 		MyLog.exit();
 	}
 
