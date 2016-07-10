@@ -62,6 +62,7 @@ import org.sandrop.webscarab.model.HttpUrl;
 import org.sandrop.webscarab.model.NamedValue;
 import org.sandrop.webscarab.model.Request;
 import org.sandrop.webscarab.model.Response;
+import org.sandrop.webscarab.plugin.proxy.TlsOnlySocketFactory;
 import org.sandrop.webscarab.util.Glob;
 
 /** Creates a new instance of URLFetcher
@@ -569,7 +570,8 @@ public class URLFetcher implements HTTPClient {
             // Use the factory to create a secure socket connected to the
             // HTTPS port of the specified web server.
             try {
-                SSLSocketFactory factory = sslContext.getSocketFactory();
+                //SSLSocketFactory factory = sslContext.getSocketFactory();
+                SSLSocketFactory factory = new TlsOnlySocketFactory(sslContext.getSocketFactory());
                 SSLSocket sslsocket=(SSLSocket)factory.createSocket(_socket,_socket.getInetAddress().getHostName(),_socket.getPort(),true);
                 // sslsocket.setEnabledProtocols(new String[] {"SSLv3"});
                 sslsocket.setUseClientMode(true);

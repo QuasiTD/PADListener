@@ -305,7 +305,8 @@ public class SSLSocketFactoryFactory {
             // sslcontext.init(new KeyManager[] { km }, null, null);
             contextCache.put(certEntry, sslContext);
         }
-        return sslContext.getSocketFactory();
+        //return sslContext.getSocketFactory();
+        return new TlsOnlySocketFactory(sslContext.getSocketFactory());
     }
 
     private X509Certificate[] cast(Certificate[] chain) {
