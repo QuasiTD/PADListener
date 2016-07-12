@@ -307,7 +307,10 @@ public class SwitchListenerFragment extends Fragment {
 		MyLog.entry();
 		// Exporting certificates only work on sdk 14 or higher
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			fr.neraud.padlistener.proxy.helper.ProxyHelper.exportCACertToUserStore(getActivity());
+			android.app.Activity  switchListenerActivity = getActivity();
+			// Try generating the certificate first in case the user tries exporting after a fresh install or cache clear
+			fr.neraud.padlistener.proxy.helper.ProxyHelper.generateCACert(switchListenerActivity);
+			fr.neraud.padlistener.proxy.helper.ProxyHelper.exportCACertToUserStore(switchListenerActivity);
 		} else {
 			// TODO: add error notification to user
 		}
