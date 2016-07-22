@@ -164,6 +164,8 @@ public class GetPlayerDataJsonParser extends AbstractJsonParser<GetPlayerDataApi
         //[4, 333300602, "NeraudMule", 17, 1, "140829151957", 9, 29, 6, 1, 0, 0, 0, 0, 2, 15, 1, 0, 0, 0, 0, 2, 15, 1, 0, 0, 0, 0]
         // New [5, 329993422, "HFR|Neraud", 292, 1, "150613152858", 48, 50, 6, 1, 0, 0, 0, 0, 0, 1422, 99, 1, 13, 12, 9, 6, 0, 1217, 99, 6, 99, 99, 99, 6, 0]
         final PADCapturedFriendModel friend = new PADCapturedFriendModel();
+        // index 0 could be the version number for the friend struct
+        // version 7 added skill inheritance?
         friend.setId(friendResult.getLong(1));
         friend.setName(friendResult.getString(2));
         friend.setRank(friendResult.getInt(3));
@@ -181,7 +183,7 @@ public class GetPlayerDataJsonParser extends AbstractJsonParser<GetPlayerDataApi
         final BaseMonsterStatsModel leader1 = extractFriendLeader(friendResult, 16);
         friend.setLeader1(leader1);
 
-        final BaseMonsterStatsModel leader2 = extractFriendLeader(friendResult, 24);
+        final BaseMonsterStatsModel leader2 = extractFriendLeader(friendResult, 26);
         friend.setLeader2(leader2);
 
         MyLog.exit();
@@ -208,6 +210,8 @@ public class GetPlayerDataJsonParser extends AbstractJsonParser<GetPlayerDataApi
         leader.setPlusRcv(friendResult.getInt(startPosition++));
         leader.setAwakenings(friendResult.getInt(startPosition++));
         leader.setLatentAwakeningsFromPackedInt(friendResult.getInt(startPosition++));
+        // inherited skill id?
+        // inherited skill level?
         return leader;
     }
 

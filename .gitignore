@@ -1,4 +1,5 @@
 /build
+/captures
 /local.properties
 /.gradle
 /.idea/workspace.xml

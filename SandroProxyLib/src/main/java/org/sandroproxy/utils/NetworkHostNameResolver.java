@@ -19,6 +19,7 @@ import org.sandrop.webscarab.httpclient.HTTPClientFactory;
 import org.sandrop.webscarab.model.HttpUrl;
 import org.sandrop.webscarab.plugin.proxy.ITransparentProxyResolver;
 import org.sandrop.webscarab.plugin.proxy.SiteData;
+import org.sandrop.webscarab.plugin.proxy.TlsOnlySocketFactory;
 import org.sandroproxy.utils.PreferenceUtils;
 
 import android.content.Context;
@@ -118,7 +119,8 @@ public class NetworkHostNameResolver implements ITransparentProxyResolver{
                       Socket socket = HTTPClientFactory.getValidInstance().getConnectedSocket(base, false);
                       SSLContext sslContext = SSLContext.getInstance("TLS");
                       sslContext.init(null, trustAllCerts, new SecureRandom());
-                      SSLSocketFactory factory = sslContext.getSocketFactory();
+                      //SSLSocketFactory factory = sslContext.getSocketFactory();
+                      SSLSocketFactory factory = new TlsOnlySocketFactory(sslContext.getSocketFactory());
                       SSLSocket sslsocket=(SSLSocket)factory.createSocket(socket,socket.getInetAddress().getHostAddress(),socket.getPort(),true);
                       // sslsocket.setEnabledProtocols(new String[] {"SSLv3"});
                       sslsocket.setUseClientMode(true);

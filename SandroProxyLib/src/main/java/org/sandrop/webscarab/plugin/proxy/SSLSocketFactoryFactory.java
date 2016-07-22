@@ -102,6 +102,10 @@ public class SSLSocketFactoryFactory {
     private static final String CA = "CA";
     private static X500Principal CA_NAME;
 
+    // ahnada 2016-07-09
+    // Renaming certificate strings for better identification
+    private static final String CA_BASE_NAME = "PADListener";
+
     static {
         try {
             
@@ -110,8 +114,14 @@ public class SSLSocketFactoryFactory {
             //        + " at " + new Date()
             //        + ",ou=OWASP Custom CA,o=OWASP,l=OWASP,st=OWASP,c=OWASP");
             
-            CA_NAME = new X500Principal("cn=SandroProxy Custom CA"
-                    + ",ou=SandroProxy Custom CA,o=SandroProxy,l=SandroProxy,st=SandroProxy,c=SandroProxy");
+            //CA_NAME = new X500Principal("cn=SandroProxy Custom CA"
+            //        + ",ou=SandroProxy Custom CA,o=SandroProxy,l=SandroProxy,st=SandroProxy,c=SandroProxy");
+            CA_NAME = new X500Principal("cn=" + CA_BASE_NAME + " Custom CA"  // common name
+                    + ",ou=" + CA_BASE_NAME + " Custom CA"                   // organizational unit
+                    + ",o=" + CA_BASE_NAME                                  // organization
+                    + ",l=" + CA_BASE_NAME                                  // locality
+                    + ",st=" + CA_BASE_NAME                                 // state
+                    + ",c=" + CA_BASE_NAME);                                // country
             _logger.setLevel(Level.FINEST);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -295,7 +305,8 @@ public class SSLSocketFactoryFactory {
             // sslcontext.init(new KeyManager[] { km }, null, null);
             contextCache.put(certEntry, sslContext);
         }
-        return sslContext.getSocketFactory();
+        //return sslContext.getSocketFactory();
+        return new TlsOnlySocketFactory(sslContext.getSocketFactory());
     }
 
     private X509Certificate[] cast(Certificate[] chain) {

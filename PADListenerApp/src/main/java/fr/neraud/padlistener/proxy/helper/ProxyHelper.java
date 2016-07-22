@@ -1,17 +1,20 @@
 package fr.neraud.padlistener.proxy.helper;
 
 import android.content.Context;
+import android.content.Intent;
 
 import org.sandrop.webscarab.model.StoreException;
 import org.sandrop.webscarab.plugin.Framework;
 import org.sandrop.webscarab.plugin.proxy.IClientResolver;
 import org.sandrop.webscarab.plugin.proxy.Proxy;
+import org.sandrop.webscarab.plugin.proxy.SSLSocketFactoryFactory;
 import org.sandroproxy.utils.NetworkHostNameResolver;
 import org.sandroproxy.utils.PreferenceUtils;
 import org.sandroproxy.utils.network.ClientResolver;
 import org.sandroproxy.webscarab.store.sql.SqlLiteStore;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import fr.neraud.log.MyLog;
 import fr.neraud.padlistener.exception.ListenerSetupException;
@@ -86,5 +89,51 @@ public class ProxyHelper {
 		}
 
 		MyLog.exit();
+	}
+
+	// Copied from SandroProxy /SandroProxyPlugin/src/org/sandroproxy/plugin/gui/MainActivity.java
+	private static String ACTION_INSTALL = "android.credentials.INSTALL";
+	private static String EXTRA_CERTIFICATE = "CERT";
+
+	/*
+	 *  this will work only on sdk 14 or higher
+	 */
+	public static void exportCACertToUserStore(Context context){
+
+		Intent intent = new Intent(ACTION_INSTALL);
+		intent.setClassName("com.android.certinstaller","com.android.certinstaller.CertInstallerMain");
+		try {
+			String keystoreCAExportFullPath = PreferenceUtils.getCAExportFilePath(context.getApplicationContext());
+			File caExportFile = new File(keystoreCAExportFullPath);
+			byte[] result = new byte[(int) caExportFile.length()];
+			FileInputStream in = new FileInputStream(caExportFile);
+			in.read(result);
+			in.close();
+			intent.putExtra(EXTRA_CERTIFICATE, result);
+			context.startActivity(intent);
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	// Code mostly taken from SandroProxyLib\src\main\java\org\sandrop\webscarab\plugin\proxy\Proxy.java Proxy constructor.
+	// Create a dummy SSLSocketFactoryFactory to force generate a CA key
+	public static void generateCACert(Context context) {
+		// The cache directory has to exist before it can create the cert files
+		context.getExternalCacheDir();
+
+		String keystoreCAFullPath = PreferenceUtils.getCAFilePath(context.getApplicationContext());
+		String keystoreCertFullPath = PreferenceUtils.getCertFilePath(context.getApplicationContext());
+		String caPassword = PreferenceUtils.getCAFilePassword(context.getApplicationContext());
+		String keyStoreType = "PKCS12";
+		if (keystoreCAFullPath != null && keystoreCAFullPath.length() > 0 &&
+			keystoreCertFullPath != null && keystoreCertFullPath.length() > 0) {
+
+			try {
+				new SSLSocketFactoryFactory(keystoreCAFullPath, keystoreCertFullPath, keyStoreType, caPassword.toCharArray());
+			} catch(Exception ignored) {
+				// Not worrying about reporting errors because the real proxy initialization will report everything
+			}
+		}
 	}
 }

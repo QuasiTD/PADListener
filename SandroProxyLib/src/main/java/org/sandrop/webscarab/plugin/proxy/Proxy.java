@@ -607,7 +607,8 @@ public class Proxy implements Plugin {
             
             
             sslcontext.init(kmf.getKeyManagers(), trustManagers, null);
-            return sslcontext.getSocketFactory();
+            //return sslcontext.getSocketFactory();
+            return new TlsOnlySocketFactory(sslcontext.getSocketFactory());
 
             /*
             String keyStoreType = "PKCS12";
